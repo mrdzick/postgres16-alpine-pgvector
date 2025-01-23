@@ -24,9 +24,9 @@ This setup is useful for anyone who wants to use Postgres for vector similarity 
 ### Pull from GHCR
 A pre-built image is available on GitHub Container Registry (GHCR). You can pull it directly without needing to build from source:
 
-`
+```
   docker pull ghcr.io/mrdzick/postgres16-alpine-pgvector:latest
-`
+```
 ### Build Locally
 If you’d prefer to build the image yourself (for example, to customize it), follow these steps:
 
@@ -38,9 +38,9 @@ If you’d prefer to build the image yourself (for example, to customize it), fo
     ```
 2. Build the Docker image:
 
-    `
+    ```
       docker build -t my-postgres-pgvector:latest .
-    `
+    ```
   
     This command will:
     - Pull the base **postgres:16-alpine** image (if not already available locally).
@@ -59,12 +59,12 @@ docker run --name my_pgvector_container \
 ```
 Or, if you pulled from GHCR:
 
-`
+```
 docker run --name my_pgvector_container \
   -e POSTGRES_PASSWORD=mysecretpassword \
   -p 5432:5432 \
   -d ghcr.io/mrdzick/postgres16-alpine-pgvector:latest
-`
+```
 
 - `--name my_pgvector_container` sets the container name for easier reference.
 - `-e POSTGRES_PASSWORD=mysecretpassword` sets the default password for the `postgres` user.
@@ -73,9 +73,9 @@ docker run --name my_pgvector_container \
 
 You can then connect to PostgreSQL using:
 
-`
+```
 psql -h localhost -p 5432 -U postgres
-`
+```
 
 (You will be prompted for the password specified above.)
 
@@ -89,13 +89,15 @@ For a complete list of environment variables, refer to the [official Postgres Do
 
 To enable pgvector in a database, connect to the database and run:
 
-`
+```
 CREATE EXTENSION IF NOT EXISTS vector;
-`
+```
 
 ### Optional Cleanup
 If you want a smaller final image (if you're building locally), you can remove build tools after pgvector is installed. Uncomment (or add) the following lines in the Dockerfile:
 
-```# RUN apk del git make gcc musl-dev postgresql-dev clang15 llvm15-dev```
+```
+# RUN apk del git make gcc musl-dev postgresql-dev clang15 llvm15-dev
+```
 
 This step will reduce the size of the final image by removing unnecessary build dependencies.
