@@ -1,5 +1,5 @@
 # Use the official Postgres 16 Alpine base image
-FROM postgres:16-alpine
+FROM postgis/postgis:16-3.4-alpine
 
 # Install necessary build dependencies
 RUN apk update && apk add --no-cache \
@@ -9,8 +9,7 @@ RUN apk update && apk add --no-cache \
     musl-dev \
     postgresql-dev \
     clang15 \
-    llvm15-dev \
-    postgis
+    llvm15-dev
 
 ENV CC=clang-15
     
