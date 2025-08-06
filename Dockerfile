@@ -8,8 +8,10 @@ RUN apk update && apk add --no-cache \
     gcc \
     musl-dev \
     postgresql-dev
+    clang15 \
+    llvm15-dev \
+    postgis
 
-RUN apk add --no-cache clang15 llvm15-dev
 ENV CC=clang-15
     
 
