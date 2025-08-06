@@ -1,19 +1,20 @@
 # Postgres 16 Alpine with pgvector
 
-This repository provides a Docker image that extends the official Postgres 16 Alpine image by installing [pgvector](https://github.com/pgvector/pgvector). pgvector is an open-source PostgreSQL extension that provides efficient vector operations, enabling you to store embeddings and perform similarity searches.
+This repository provides a Docker image that extends the official Postgres 16 Alpine image by installing [pgvector](https://github.com/pgvector/pgvector) and [postgis](https://postgis.net/). pgvector is an open-source PostgreSQL extension that provides efficient vector operations, enabling you to store embeddings and perform similarity searches. PostGIS extends the capabilities of the PostgreSQL relational database by adding support for storing, indexing, and querying geospatial data.
 
 ## Overview
 This Dockerfile:
 1. Starts from the official postgres:16-alpine image.
-2. Installs necessary build dependencies (e.g., git, make, gcc, clang-15, etc.).
+2. Installs necessary build dependencies (e.g., git, make, gcc, clang-15, postgis etc.).
 3. Clones the [pgvector](https://github.com/pgvector/pgvector) repository.
 4. Builds and installs the pgvector extension into the PostgreSQL instance.
 
-This setup is useful for anyone who wants to use Postgres for vector similarity search, such as for machine learning embeddings or other vector-based data operations.
+This setup is useful for anyone who wants to use Postgres for vector similarity search, such as for machine learning embeddings or other vector-based data operations, and for querying geospatial data.
 
 ## Features
 - **Minimal Image**: Based on the Alpine variant of Postgres 16, keeping the size small.
 - **pgvector Support**: Includes pgvector extension for efficient vector operations.
+- **PostGIS Support**: Includes postgis extension for efficient geospatial data querying.
 - **Easy Integration**: Can be dropped into any existing workflow that relies on Postgres, with the added benefit of pgvector functionality.
 
 ## Requirements
@@ -25,7 +26,7 @@ This setup is useful for anyone who wants to use Postgres for vector similarity 
 A pre-built image is available on GitHub Container Registry (GHCR). You can pull it directly without needing to build from source:
 
 ```
-  docker pull ghcr.io/mrdzick/postgres16-alpine-pgvector:latest
+  docker pull ghcr.io/mrdzick/postgres16-alpine-pgvector-postgis:latest
 ```
 ### Build Locally
 If you’d prefer to build the image yourself (for example, to customize it), follow these steps:
@@ -34,12 +35,13 @@ If you’d prefer to build the image yourself (for example, to customize it), fo
 
     ```
     git clone https://github.com/mrdzick/postgres16-alpine-pgvector
+    git checkout extension/postgis
     cd postgres16-alpine-pgvector
     ```
 2. Build the Docker image:
 
     ```
-      docker build -t my-postgres-pgvector:latest .
+      docker build -t my-postgres-pgvector-postgis:latest .
     ```
   
     This command will:
@@ -63,7 +65,7 @@ Or, if you pulled from GHCR:
 docker run --name my_pgvector_container \
   -e POSTGRES_PASSWORD=mysecretpassword \
   -p 5432:5432 \
-  -d ghcr.io/mrdzick/postgres16-alpine-pgvector:latest
+  -d ghcr.io/mrdzick/postgres16-alpine-pgvector-postgis:latest
 ```
 
 - `--name my_pgvector_container` sets the container name for easier reference.
